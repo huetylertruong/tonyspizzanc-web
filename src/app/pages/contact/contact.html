@@ -1,0 +1,77 @@
+<section class="page-hero tri">
+  <div class="container">
+    <span class="eyebrow">We want to hear from you</span>
+    <h1>Catering &amp; Contact</h1>
+    <p>Planning a party, have a question, or want to tell us how we're doing? Drop us a line.</p>
+  </div>
+</section>
+
+<section class="section section--light tri tri--wings">
+  <div class="container layout">
+    <aside class="side">
+      <div class="block" appReveal>
+        <h2>Having a party?</h2>
+        <p>
+          Whether you're planning a birthday for 10 or a corporate event for 100+, we've got you. Choose "Catering / party"
+          in the form, include the event type and number of guests, and we'll reach out within 24–48 hours.
+        </p>
+        <p>Need help right away? Call the store directly.</p>
+        <a class="btn btn--primary" [href]="site.phoneHref">Call {{ site.phone }}</a>
+        <a class="text-link" routerLink="/menu">View our menu</a>
+      </div>
+      <div class="block" [appReveal]="120">
+        <h2>Your feedback matters</h2>
+        <p>
+          Tell us what we're doing right and where we can improve. We'd love to hear your feedback, comments and compliments.
+        </p>
+      </div>
+    </aside>
+
+    <form class="card form" [appReveal]="80" [formGroup]="form" (ngSubmit)="send()" novalidate>
+      <div class="form-row">
+        <div class="field" [class.invalid]="invalid('firstName')">
+          <label for="firstName">First name</label>
+          <input id="firstName" [attr.aria-invalid]="invalid('firstName')" [attr.aria-describedby]="invalid('firstName') ? 'firstName-error' : null" type="text" formControlName="firstName" autocomplete="given-name" />
+          <span class="error" id="firstName-error">Please enter your first name.</span>
+        </div>
+        <div class="field" [class.invalid]="invalid('lastName')">
+          <label for="lastName">Last name</label>
+          <input id="lastName" [attr.aria-invalid]="invalid('lastName')" [attr.aria-describedby]="invalid('lastName') ? 'lastName-error' : null" type="text" formControlName="lastName" autocomplete="family-name" />
+          <span class="error" id="lastName-error">Please enter your last name.</span>
+        </div>
+      </div>
+
+      <div class="field" [class.invalid]="invalid('email')">
+        <label for="email">Email</label>
+        <input id="email" [attr.aria-invalid]="invalid('email')" [attr.aria-describedby]="invalid('email') ? 'email-error' : null" type="email" formControlName="email" autocomplete="email" />
+        <span class="error" id="email-error">Please enter a valid email address.</span>
+      </div>
+
+      <div class="field">
+        <label for="topic">What can we help with?</label>
+        <select id="topic" formControlName="topic">
+          @for (t of topics; track t) {
+            <option [value]="t">{{ t }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field" [class.invalid]="invalid('message')">
+        <label for="message">Message</label>
+        <textarea id="message" [attr.aria-invalid]="invalid('message')" [attr.aria-describedby]="invalid('message') ? 'message-error' : null" formControlName="message" placeholder="For catering, include the event type, date and number of guests."></textarea>
+        <span class="error" id="message-error">Please write at least a few words.</span>
+      </div>
+
+      @if (status() === 'sent') {
+        <p class="form-success" role="status">Thanks! Your message has been sent. We'll be in touch soon.</p>
+      }
+      @if (status() === 'error') {
+        <p class="form-error" role="alert">Something went wrong. Please try again or call us at {{ site.phone }}.</p>
+      }
+
+      <button type="submit" class="btn btn--primary" [disabled]="status() === 'sending'">
+        {{ status() === 'sending' ? 'Sending…' : 'Send message' }}
+      </button>
+    </form>
+  </div>
+</section>

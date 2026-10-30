@@ -1,0 +1,221 @@
+<section class="hero tri">
+  <div class="hero-media" role="group" aria-roledescription="carousel" aria-label="Photos of our food">
+    @for (s of slides; track s.src; let i = $index) {
+      <img
+        [src]="s.src"
+        [alt]="s.alt"
+        [class.active]="i === slide()"
+        [style.--pos]="s.pos"
+        [style.--origin]="s.origin"
+        [style.--zoom]="s.zoom"
+        [style.--origin-m]="s.originM"
+        [style.--zoom-m]="s.zoomM"
+        [attr.aria-hidden]="i === slide() ? null : 'true'"
+        [attr.loading]="i === 0 ? null : 'lazy'"
+        [attr.fetchpriority]="i === 0 ? 'high' : null"
+        width="1500"
+        height="844"
+        decoding="async"
+      />
+    }
+    <div class="hero-controls">
+      <span class="hero-caption" aria-live="off">{{ slides[slide()].caption }}</span>
+      <div class="hero-dots">
+        @for (s of slides; track s.src; let i = $index) {
+          <button type="button" class="bar" [class.active]="i === slide()" [attr.aria-label]="'Show photo ' + (i + 1) + ': ' + s.caption" [attr.aria-current]="i === slide() ? 'true' : null" (click)="go(i)">
+            <span class="fill" [class.run]="playing() && i === slide()" (animationend)="next()"></span>
+          </button>
+        }
+        @if (!reducedMotion) {
+          <button type="button" class="playpause" [attr.aria-label]="playing() ? 'Pause photo rotation' : 'Play photo rotation'" (click)="togglePlay()">
+            @if (playing()) {
+              <svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1.5" width="3" height="9" /><rect x="7" y="1.5" width="3" height="9" /></svg>
+            } @else {
+              <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5 L10.5 6 L3 10.5 Z" /></svg>
+            }
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-copy">
+      <p class="status" [class.open]="hoursService.status().open">
+        <span class="dot"></span>{{ hoursService.status().text }}
+      </p>
+      <h1>Fresh dough.<br />Homemade sauce.<br /><span>Made to order.</span></h1>
+      <p class="lead">
+        Pizza, subs, pasta and wings from your neighborhood spot in Statesville. Pick-up or delivery, hot out of the oven.
+      </p>
+      <div class="cta">
+        <a class="btn btn--primary" [href]="site.order.url" target="_blank" rel="noopener">Order Online<span class="sr-only"> (opens in a new tab)</span></a>
+        <a class="btn btn--outline" routerLink="/menu">View Menu</a>
+      </div>
+      <p class="phone-line">Prefer to call? <a [href]="site.phoneHref">{{ site.phone }}</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="info-bar section--light" aria-label="Location and hours">
+  <div class="container info">
+    <div class="info-block" appReveal>
+      <span class="info-label">Find us</span>
+      <address class="info-value">{{ site.street }}<br />{{ site.cityLine }}</address>
+      <a class="info-link" [href]="site.mapsUrl" target="_blank" rel="noopener">Get directions <span aria-hidden="true">&rarr;</span><span class="sr-only"> (opens in a new tab)</span></a>
+    </div>
+    <div class="info-block" [appReveal]="90">
+      <span class="info-label">Open today</span>
+      <p class="info-value">{{ todayHours() }}</p>
+      <span class="info-meta">
+        <span class="dot" [class.on]="hoursService.status().open"></span>
+        {{ hoursService.status().open ? 'Open now' : hoursService.status().text }}
+      </span>
+      <a class="info-link" routerLink="/visit">See all hours <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section favorites">
+  <div class="parallax-bg" [appParallax]="0.16" aria-hidden="true"></div>
+  <div class="container">
+    <div class="section-head" appReveal>
+      <span class="eyebrow">Specialty pizzas</span>
+      <h2>Customer favorites</h2>
+      <p>Fresh dough, homemade sauces and generous toppings. Available in 10", 12", 14" and 16", thin or thick crust.</p>
+    </div>
+
+    <div class="fav-grid">
+      @for (f of favorites; track f.name; let i = $index) {
+        <a class="fav" routerLink="/menu" [appReveal]="(i % 3) * 90">
+          <img [src]="f.image" [alt]="f.alt" width="1500" height="844" loading="lazy" decoding="async" />
+          <div class="fav-body">
+            <h3>{{ f.name }}</h3>
+            <p>{{ f.text }}</p>
+          </div>
+        </a>
+      }
+    </div>
+
+    <div class="more" appReveal>
+      <a class="btn btn--dark" routerLink="/menu">See the full menu</a>
+      <span>Gluten-free crust available in 10".</span>
+    </div>
+  </div>
+</section>
+
+<section class="section section--light tri">
+  <div class="container">
+    <div class="section-head" appReveal>
+      <span class="eyebrow">More than pizza</span>
+      <h2>Round out the order</h2>
+    </div>
+    <div class="cat-grid">
+      @for (c of categories; track c.id; let i = $index) {
+        <a class="cat" routerLink="/menu" [appReveal]="(i % 4) * 80">
+          <img [src]="c.image" [alt]="c.alt" [style.object-position]="c.pos" width="1500" height="844" loading="lazy" decoding="async" />
+          <div class="cat-body">
+            <h3>{{ c.name }}</h3>
+            <p>{{ c.note }}</p>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section tri tri--wings">
+  <div class="container values">
+    <div appReveal>
+      <span class="eyebrow">Why Tony's</span>
+      <h2>Simple food, done right</h2>
+    </div>
+    <ul class="value-list">
+      <li [appReveal]="80">
+        <h3>Fresh dough</h3>
+        <p>Every crust, stromboli and breadstick starts with it.</p>
+      </li>
+      <li [appReveal]="180">
+        <h3>Homemade sauces &amp; dressings</h3>
+        <p>Our sauces and dressings are made in house.</p>
+      </li>
+      <li [appReveal]="280">
+        <h3>Locally owned &amp; operated</h3>
+        <p>Your neighbors in Statesville, feeding families, teams and offices.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section order tri">
+  <div class="container order-grid">
+    <div appReveal>
+      <span class="eyebrow">Order your way</span>
+      <h2>Hungry? We're a tap away.</h2>
+      <p>Order online for pick-up or delivery, or give us a call.</p>
+    </div>
+    <div class="order-actions" [appReveal]="120">
+      <a class="btn btn--primary" [href]="site.order.url" target="_blank" rel="noopener">Order Online<span class="sr-only"> (opens in a new tab)</span></a>
+      <a class="btn btn--outline" [href]="site.phoneHref">Call {{ site.phone }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--light tri tri--wings">
+  <div class="container catering">
+    <div class="catering-copy" appReveal>
+      <span class="eyebrow">Parties &amp; events</span>
+      <h2>Feeding a crowd?</h2>
+      <p>
+        Whether it's a birthday for 10 or a corporate event for 100+, we've got you. Trays of pasta, salads, garlic knots,
+        wings and desserts, plus pizza for the whole group.
+      </p>
+      <div class="cta">
+        <a class="btn btn--primary" routerLink="/contact">Request catering</a>
+        <a class="btn btn--outline-dark" routerLink="/menu">View menu</a>
+      </div>
+    </div>
+    <div class="catering-art" [appReveal]="140" role="img" aria-label="Pizza with one slice taken">
+      <svg viewBox="6 6 108 108" aria-hidden="true" focusable="false" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M40.1 12 L60 60 L12 40.1 A52 52 0 1 0 40.1 12 Z" fill="#e0963a" />
+        <path d="M43.16 19.35 L60 60 L19.35 43.16 A44 44 0 1 0 43.16 19.35 Z" fill="#ffd166" />
+        <path d="M40.1 12 L60 60 L12 40.1 A52 52 0 1 0 40.1 12 Z" fill="none" stroke="#1c1917" stroke-width="2.5" />
+        <g stroke="#e0963a" stroke-width="2">
+          <line x1="60" y1="60" x2="100.6" y2="76.8" />
+          <line x1="60" y1="60" x2="76.8" y2="100.6" />
+          <line x1="60" y1="60" x2="43.2" y2="100.6" />
+          <line x1="60" y1="60" x2="19.4" y2="76.8" />
+          <line x1="60" y1="60" x2="76.8" y2="19.4" />
+          <line x1="60" y1="60" x2="100.6" y2="43.2" />
+        </g>
+        <g fill="#c8202b">
+          <circle cx="87" cy="60" r="6" />
+          <circle cx="79.1" cy="79.1" r="6" />
+          <circle cx="60" cy="87" r="6" />
+          <circle cx="40.9" cy="79.1" r="6" />
+          <circle cx="33" cy="60" r="6" />
+          <circle cx="60" cy="33" r="6" />
+          <circle cx="79.1" cy="40.9" r="6" />
+        </g>
+      </svg>
+    </div></div>
+</section>
+
+<section class="section section--sand tri">
+  <div class="container visit">
+    <img appReveal src="/images/storefront.jpg" alt="Tony's Pizza & Subs storefront on Turnersburg Highway" width="1360" height="1020" loading="lazy" decoding="async" />
+    <div [appReveal]="140">
+      <span class="eyebrow">Visit us</span>
+      <h2>Stop in or call ahead</h2>
+      <address>{{ site.street }}<br />{{ site.cityLine }}</address>
+      <ul class="hours-list">
+        <li><span>Monday – Thursday</span> 11 AM – 9 PM</li>
+        <li><span>Friday – Saturday</span> 11 AM – 10 PM</li>
+        <li><span>Sunday</span> 11 AM – 8 PM</li>
+      </ul>
+      <div class="cta">
+        <a class="btn btn--dark" [href]="site.mapsUrl" target="_blank" rel="noopener">Get directions<span class="sr-only"> (opens in a new tab)</span></a>
+        <a class="btn btn--outline-dark" [href]="site.phoneHref">{{ site.phone }}</a>
+      </div>
+    </div>
+  </div>
+</section>

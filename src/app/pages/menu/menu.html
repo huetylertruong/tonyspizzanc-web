@@ -1,0 +1,22 @@
+<section class="page-hero tri">
+  <div class="container">
+    <span class="eyebrow">Our menu</span>
+    <h1>Menu</h1>
+    <p>Fresh dough, homemade sauces and dressings. Order online or call {{ site.phone }}.</p>
+    <div class="hero-cta">
+      <a class="btn btn--primary" [href]="site.order.url" target="_blank" rel="noopener">Order Online<span class="sr-only"> (opens in a new tab)</span></a>
+      <a class="btn btn--outline" [href]="site.phoneHref">Call to order</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--light tri">
+  <div class="container pages">
+    @for (p of pages; track p.src; let i = $index) {
+      <a class="page" [href]="p.src" target="_blank" rel="noopener" title="Open full size" [appReveal]="i * 120">
+        <img [src]="p.src" [alt]="p.alt" width="2500" height="1933" loading="lazy" decoding="async" />
+      </a>
+    }
+    <p class="fine-print">Prices do not include sales tax. Driver charge may apply. Prices may vary. Tap a page to view it full size.</p>
+  </div>
+</section>

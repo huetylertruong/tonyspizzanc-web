@@ -1,0 +1,32 @@
+<section class="page-hero tri">
+  <div class="container">
+    <span class="eyebrow">Fresh out of the oven</span>
+    <h1>Gallery</h1>
+    <p>A look at what's coming out of our kitchen in Statesville.</p>
+  </div>
+</section>
+
+<section class="section tri tri--wings">
+  <div class="container grid">
+    @for (img of images; track img.src; let i = $index) {
+      <button type="button" class="tile" [appReveal]="(i % 3) * 80" (click)="open(i)" [attr.aria-label]="'View larger: ' + img.caption">
+        <img [src]="img.src" alt="" width="1500" height="844" loading="lazy" decoding="async" />
+        <span class="caption">{{ img.caption }}</span>
+      </button>
+    }
+  </div>
+</section>
+
+@if (current() !== null) {
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" (click)="close()">
+    <button type="button" class="lb-btn close" aria-label="Close" (click)="close()">&times;</button>
+    <button type="button" class="lb-btn prev" aria-label="Previous photo" (click)="step(-1); $event.stopPropagation()">&#8249;</button>
+    @for (img of [images[current()!]]; track img.src) {
+      <figure (click)="$event.stopPropagation()">
+        <img [src]="img.src" [alt]="img.alt" />
+        <figcaption>{{ img.caption }}</figcaption>
+      </figure>
+    }
+    <button type="button" class="lb-btn next" aria-label="Next photo" (click)="step(1); $event.stopPropagation()">&#8250;</button>
+  </div>
+}

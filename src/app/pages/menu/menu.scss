@@ -1,0 +1,26 @@
+.hero-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+.page-hero .btn--outline { color: var(--white); }
+
+.pages {
+  display: grid;
+  gap: 2rem;
+  max-width: 1100px;
+}
+
+.page {
+  display: block;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+
+@media (hover: hover) {
+  .page:hover { transform: translateY(-3px); border-color: var(--muted); }
+}
+
+.page img { width: 100%; height: auto; }
+
+.fine-print { font-size: 0.8125rem; color: var(--muted); }

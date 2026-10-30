@@ -1,0 +1,60 @@
+<section class="page-hero tri">
+  <div class="container">
+    <span class="eyebrow">Statesville, NC</span>
+    <h1>Hours &amp; Location</h1>
+    <p>Pick up your order or have it delivered. Call ahead and we'll have it ready.</p>
+  </div>
+</section>
+
+<section class="section section--light">
+  <div class="container layout">
+    <div class="details">
+      <div class="card" appReveal>
+        <h2>Tony's Pizza &amp; Subs</h2>
+        <address>{{ site.street }}<br />{{ site.cityLine }}</address>
+        <p class="status" [class.open]="hoursService.status().open">
+          <span class="dot"></span>{{ hoursService.status().text }}
+        </p>
+        <div class="actions">
+          <a class="btn btn--primary" [href]="site.mapsUrl" target="_blank" rel="noopener">Get directions<span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="btn btn--outline-dark" [href]="site.phoneHref">Call {{ site.phone }}</a>
+        </div>
+      </div>
+
+      <div class="card" [appReveal]="100">
+        <h3>Hours</h3>
+        <table class="hours">
+          <caption class="sr-only">Opening hours</caption>
+          <tbody>
+            @for (h of hours; track h.day; let i = $index) {
+              <tr [class.today]="i === hoursService.today()">
+                <th scope="row">{{ h.day }}</th>
+                <td>{{ h.label }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        <p class="service">Pick-up &amp; delivery. Driver charge may apply.</p>
+      </div>
+
+      <div class="card" [appReveal]="200">
+        <h3>Order online</h3>
+        <p class="order-copy">Order for pick-up or delivery, or call us.</p>
+        <div class="actions">
+          <a class="btn btn--dark btn--sm" [href]="site.order.url" target="_blank" rel="noopener">Order Online<span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="media" [appReveal]="120">
+      <iframe
+        title="Map showing Tony's Pizza & Subs at 538 Turnersburg Hwy, Statesville, NC"
+        [src]="mapUrl"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      ></iframe>
+      <img src="/images/storefront.jpg" alt="Tony's Pizza & Subs storefront in Suite D" width="1360" height="1020" loading="lazy" decoding="async" />
+    </div>
+  </div>
+</section>
