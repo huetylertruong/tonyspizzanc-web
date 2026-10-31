@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="420" height="420" viewBox="0 0 420 420" fill="none" stroke="#000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+  <defs>
+    <g id="s">
+      <path vector-effect="non-scaling-stroke" d="M-12 -14 Q0 -20 12 -14 L0 15 Z"/>
+      <path vector-effect="non-scaling-stroke" d="M-8.6 -8.6 Q0 -13.4 8.6 -8.6"/>
+    </g>
+  </defs>
+  <use xlink:href="#s" transform="translate(58 52) rotate(24)"/>
+  <use xlink:href="#s" transform="translate(196 88) rotate(-40) scale(.9)"/>
+  <use xlink:href="#s" transform="translate(338 46) rotate(68) scale(1.1)"/>
+  <use xlink:href="#s" transform="translate(92 196) rotate(-12) scale(1.15)"/>
+  <use xlink:href="#s" transform="translate(232 214) rotate(130) scale(.95)"/>
+  <use xlink:href="#s" transform="translate(356 172) rotate(-75) scale(.9)"/>
+  <use xlink:href="#s" transform="translate(48 340) rotate(200)"/>
+  <use xlink:href="#s" transform="translate(176 350) rotate(35) scale(1.1)"/>
+  <use xlink:href="#s" transform="translate(320 318) rotate(-150) scale(.85)"/>
+</svg>
